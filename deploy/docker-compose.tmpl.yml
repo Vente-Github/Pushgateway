@@ -7,7 +7,6 @@ services:
       - --web.listen-address=:${PORT}
       - --web.telemetry-path=${METRICS_PATH}
       - --web.external-url=https://${PUBLIC_HOSTNAME}${PUSHGATEWAY_PATH}
-      - --web.route-prefix=/
       - --persistence.file=${DATA_PATH}/metrics
       - --persistence.interval=${PERSISTENCE_INTERVAL}
       - --log.level=${LOG_LEVEL}
@@ -35,8 +34,7 @@ services:
         traefik.http.routers.pushgateway.rule: Host(`${PUBLIC_HOSTNAME}`) && PathPrefix(`${PUSHGATEWAY_PATH}`)
         traefik.http.services.pushgateway.loadbalancer.server.port: '${PORT}'
         traefik.http.middlewares.pushgateway-auth.basicauth.users: ${UI_AUTH}
-        traefik.http.middlewares.pushgateway-stripprefix.stripprefix.prefixes: ${PUSHGATEWAY_PATH}
-        traefik.http.routers.pushgateway.middlewares: pushgateway-auth,pushgateway-stripprefix
+        traefik.http.routers.pushgateway.middlewares: pushgateway-auth
         traefik.http.routers.pushgateway.service: pushgateway
       resources:
         limits:
