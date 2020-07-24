@@ -7,6 +7,7 @@ services:
       - --web.listen-address=:${PORT}
       - --web.telemetry-path=${METRICS_PATH}
       - --web.external-url=https://${PUBLIC_HOSTNAME}${PUSHGATEWAY_PATH}
+      - --web.route-prefix=/
       - --persistence.file=${DATA_PATH}/metrics
       - --persistence.interval=${PERSISTENCE_INTERVAL}
       - --log.level=${LOG_LEVEL}
